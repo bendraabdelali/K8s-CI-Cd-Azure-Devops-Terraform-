@@ -1,41 +1,58 @@
 
 # Docker-portfolio-project
 
-In this project we will create  machine learning model to predict House price , and create its interface using Streamlit. After creating the Streamlit app, we shall use docker to deploy it  .
+In this project we will create :
+1- Create a Kubernetes cluster with Azure Kubernetes Service using Terraform
+2-pipeline that continuously builds and deploys our  app using  Azure Pipelines. Every time you change your code in a repository that contains a Dockerfile, the images are pushed to your DockerHub (we can alse use any container registry like Azure Container Registry ), and the manifests are then deployed to your AKS cluster.
 
-
+Azure Pipelines lets you build, test, and deploy with continuous integration (CI) and continuous delivery (CD) using Azure DevOps.
 
 ![image](./image/image.png)
 
-mv kubeconfig  ~/.kube/config
+
 ##  Prerequisites
 
-To run this project, you will need to install 
-[`docker`](https://docs.docker.com/engine/install/ubuntu/)
-
-[`python`](https://www.python.org/downloads/)
-
+To run this project, you will need :
+[`Azure Account`] (https://azure.microsoft.com/en-us/free/?WT.mc_id=A261C142F) 
+[`Azure Devops Account`](https://azure.microsoft.com/en-us/products/devops/)
+[`Azure Cli`](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
+[`Terrafrom`](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
+[`Kubectl`](https://kubernetes.io/docs/tasks/tools/)
 
 ## Usage
+### 1- Create a Kubernetes cluster with Terraform 
+Create a Kubernetes cluster with
 first go and run House_predict_.ipynb to create model.joblib 
  ```bash
-  docker build -t streamlitapp:latest .
+  cd IaC
+  az login
+  Terraform apply 
+  mv kubeconfig ~/.kube/config
 ```
-
+Verify the health of the cluster
  ```bash
-  docker run  -d -p 8501:8501 streamlitapp:latest
+  kubectl get nodes
 ```
-## Access to APP
-#### 
+### 2- Create the pipeline
+- Sign in to your Azure DevOps organization and go to your project.
 
- - [localhost:8501](http://localhost:8501/)
- ![image](./image/image.png)
+- Go to Pipelines, and then select New pipeline,select GitHub, enter your GitHub credentials. select repository that you forked.
+- choose  Existing Azure Piplines Yaml file for Configure your pipeline and choose azure-devops.yaml file  
+- Select Project settings > Service connections .
+- Select + New service connection, select the type of service connection that you need, and then select Next. in this project we need two first connection to Docker Hub (for the name give Dockerhub ) and second connection into Aks (give aks-cred as the name of the connection )
+
+### 2- Run or Save  piplines . 
+
 
 ## Built With
-
+- Azure Devops
+- Terrafrom
+- Kubernetes
+- Azure
 - Docker
 - Streamlit
-- scikit-learn
+
+
 
 
 
