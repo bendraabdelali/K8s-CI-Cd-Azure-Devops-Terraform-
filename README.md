@@ -1,5 +1,5 @@
 
-# k8s-CI-Cd-Devops-azure
+# k8s-CI-Cd-azure-Devops
 
 
 In this project we will create :  
