@@ -1,0 +1,82 @@
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+  CONTAINER_REGISTRY: 'abdosuper'
+  image_name: "aks-app"
+  vmImageName: "ubuntu-latest"
+  IMAGE_TAG: "$(Build.BuildId)"
+  Deployment_file : "deployment.yaml"
+
+stages:
+- stage: Build 
+  displayName: Build stage
+  jobs:  
+  - job: Build 
+    displayName: Build and Push Container Images
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@0
+      displayName: 'Build an image'
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryConnection: Dockerhub
+        dockerFile: Dockerfile
+        imageName: '$(CONTAINER_REGISTRY)/$(image_name):$(IMAGE_TAG)'
+
+    - task: Docker@0
+      displayName: 'Push an image'
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryConnection: Dockerhub #Dockerhub is the name of connection to docker hub 
+        action: 'Push an image'
+        imageName: '$(CONTAINER_REGISTRY)/$(image_name):$(IMAGE_TAG)'
+    # copie file to be ready to deploy stage
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(build.artifactstagingdirectory)' 
+      inputs:
+        Contents: deployment.yaml
+        TargetFolder: '$(build.artifactstagingdirectory)'
+    # publish file to be accsible in deploy stage 
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
+
+
+  
+
+- stage: Deploy 
+  displayName: Deploy stage
+  dependsOn: Build
+  jobs:  
+  - job: Build 
+    displayName: Build and Push Container Images
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: replacetokens@5
+      inputs:
+        targetFiles: 'deployment.yaml'
+        encoding: 'auto'
+        tokenPattern: 'default'
+        writeBOM: true
+        actionOnMissing: 'warn'
+        keepToken: false
+        actionOnNoFiles: 'continue'
+        enableTransforms: false
+        enableRecursion: false
+        useLegacyPattern: false
+        enableTelemetry: true
+
+
+    - task: Kubernetes@1
+      displayName: 'kubectl apply'
+      inputs:
+        kubernetesServiceEndpoint: 'aks-cred' #aks-cred is the name of connection to azure aks
+        namespace: default
+        command: apply
+        useConfigurationFile: true
+        configuration: $(Deployment_file)

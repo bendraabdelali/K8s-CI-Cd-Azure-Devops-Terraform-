@@ -1,0 +1,4 @@
+IaC/.terraform/*
+IaC/terraform.*
+IaC/.terraform*
+.vscode/*
