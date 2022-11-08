@@ -1,5 +1,6 @@
 
-# Docker-portfolio-project
+# k8s-CI-Cd-Devops-azure
+
 
 In this project we will create :  
 - 1- Create a Kubernetes cluster with Azure Kubernetes Service using Terraform
