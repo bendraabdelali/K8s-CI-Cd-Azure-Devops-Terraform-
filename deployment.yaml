@@ -39,13 +39,13 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: devop-service
+  name: devops-service
 spec:
   selector:
     app:  devop-app
   type:  LoadBalancer 
   ports:
-  - name: load
+  - name: devops-service
     port:  8501
     targetPort:  8501     
 

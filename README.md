@@ -42,6 +42,16 @@ Verify the health of the cluster
 - Select + New service connection, select the type of service connection that you need, and then select Next. in this project we need two first connection to Docker Hub (for the name give Dockerhub ) and second connection into Aks (give aks-cred as the name of the connection )
 
 ### 2- Run or Save  piplines . 
+### 3-Acces app
+Verify the deployment added 
+ ```bash
+  kubectl get deployment
+  kubectl get service devops-service 
+```
+### EXTERNAL-IP:8501
+
+
+![image](./image/Aks.png)
 
 
 ## Built With
