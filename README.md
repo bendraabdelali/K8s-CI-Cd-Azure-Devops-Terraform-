@@ -4,7 +4,7 @@
 
 In this project we will create :  
 - 1- Create a Kubernetes cluster with Azure Kubernetes Service using Terraform
-- 2-pipeline that continuously builds and deploys our  app using  Azure Pipelines. Every time you change your code in a repository that contains a Dockerfile, the images are pushed to your DockerHub (we can alse use any container registry like Azure Container Registry ), and the manifests are then deployed to your AKS cluster.
+- 2-pipeline that continuously builds and deploys our  app using  Azure Pipelines. Every time you change your code in a repository that contains a Dockerfile, the images are pushed to your DockerHub (we can alse use any container registry like Azure Container Registry ), and the manifests are then deployed to your AKS cluster.<br>
 Azure Pipelines lets you build, test, and deploy with continuous integration (CI) and continuous delivery (CD) using Azure DevOps.
 
 ![image](./image/image.png)
