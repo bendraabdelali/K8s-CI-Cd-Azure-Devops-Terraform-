@@ -27,7 +27,7 @@ first go and run House_predict_.ipynb to create model.joblib
   cd IaC
   az login
   Terraform apply 
-  mv kubeconfig ~/.kube/config
+
 ```
 Verify the health of the cluster
  ```bash
