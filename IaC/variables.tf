@@ -26,5 +26,6 @@ variable "worker" {
 variable "kube_path" {
   type        = string
   description = "path to store kube config file "
+  default = "C:\\Users\\abdelali\\.kube\\config"
 }
 
