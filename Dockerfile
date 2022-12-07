@@ -1,10 +1,16 @@
-FROM python:3.7
-WORKDIR /app
+FROM python:3.7-slim
 
-COPY requirements.txt .
-RUN pip  install -r requirements.txt
-EXPOSE 8501
+# Install Streamlit 
+RUN pip install streamlit
+
+# Copy the app files to the container
 COPY app.py /app/
 
-ENTRYPOINT ["python","-m","streamlit", "run"]
-CMD ["app.py"]
+# Set the working directory to the app directory
+WORKDIR /app
+
+# Expose the default Streamlit port
+EXPOSE 8501
+
+# Run the Streamlit app
+CMD ["streamlit", "run", "app.py"]
