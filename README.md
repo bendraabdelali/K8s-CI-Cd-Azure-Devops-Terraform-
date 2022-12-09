@@ -13,9 +13,11 @@ The project consists of the following steps:
 
 This provide a reliable and efficient approach to deploying applications quickly and easily.
 
-![image](./images/image.png)
 
 
+<p align="center">
+  <img src="./images/image.png" />
+</p>
 ## Built With
 - Azure Devops
 - Terrafrom
